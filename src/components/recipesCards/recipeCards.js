@@ -6,7 +6,7 @@ export default function RecipeCards(props) {
     <div>
       <h1>{props.label}</h1>
       <h2>{props.type}</h2>
-      <Link to={`/recipes/${props.id}`}>
+      <Link to={`/recipe/${props.id}`}>
         <img src={props.image} alt={props.label}></img>
       </Link>
     </div>

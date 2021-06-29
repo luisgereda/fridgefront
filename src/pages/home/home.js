@@ -35,14 +35,18 @@ export default function HomeSearch() {
       <div>
         {!recipes
           ? "no data"
-          : recipes.map((recipe, index) => (
-              <RecipeCards
-                key={index}
-                label={recipe.recipe.label}
-                image={recipe.recipe.image}
-                type={recipe.recipe.cuisineType}
-              ></RecipeCards>
-            ))}
+          : recipes.map((recipe, index) => {
+              const id = recipe.recipe.uri.split("_");
+              return (
+                <RecipeCards
+                  key={index}
+                  label={recipe.recipe.label}
+                  image={recipe.recipe.image}
+                  type={recipe.recipe.cuisineType}
+                  id={id[1]}
+                ></RecipeCards>
+              );
+            })}
       </div>
     </div>
   );

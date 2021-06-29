@@ -6,19 +6,17 @@ import { useParams } from "react-router-dom";
 import { fetchRecipeById } from "../../store/recipeDetail/actions";
 import { selectRecipebyId } from "../../store/recipeDetail/selectors";
 
-import data from "../RecipeDetail/recipeId.json";
-
-const recipe = data.recipe;
-console.log(recipe);
-
 export default function RecipeDetail() {
-  // const dispatch = useDispatch();
-  // const { recipeId } = useParams();
-  // const recipe = useSelector(selectRecipebyId);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  // console.log("what is id", id);
+  const recipe = useSelector(selectRecipebyId);
+  // console.log("what is data", recipe);
 
-  // useEffect(() => {
-  //   dispatch(fetchRecipeId(recipeId));
-  // }, []);
+  useEffect(() => {
+    // console.log("I got a dispatch");
+    dispatch(fetchRecipeById(id));
+  }, [dispatch, id]);
 
   if (!recipe.uri) {
     return "Loading...";

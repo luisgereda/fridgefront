@@ -15,6 +15,7 @@ import { getUserWithStoredToken } from "./store/user/actions";
 import { Jumbotron } from "react-bootstrap";
 import HomeSearch from "./pages/home/home";
 import RecipeDetail from "./pages/RecipeDetail";
+import Profiles from "./pages/Profiles/profiles";
 
 // const Home = () => (
 //   <Jumbotron>
@@ -42,7 +43,7 @@ function App() {
       {isLoading ? <Loading /> : null}
       <Switch>
         <Route exact path="/" component={HomeSearch} />
-        <Route path="/other" component={Other} />
+        <Route path="/profiles" component={Profiles} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/recipe/:id" component={RecipeDetail} />

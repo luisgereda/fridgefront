@@ -5,13 +5,11 @@ import {
   Badge,
   Button,
   Form,
-  Card,
   Container,
   Row,
   Col,
   Jumbotron,
 } from "react-bootstrap";
-import BackgroundImage from "../../components/BackgroundImage/BackgroundImage";
 import RecipeCards from "../../components/recipesCards/recipeCards";
 
 export default function HomeSearch() {

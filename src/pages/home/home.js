@@ -61,6 +61,7 @@ export default function HomeSearch() {
       </Jumbotron>
 
       <div>
+
         <Container>
           <Row>
             {!recipes

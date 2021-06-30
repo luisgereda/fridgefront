@@ -61,21 +61,24 @@ export default function HomeSearch() {
       </Jumbotron>
 
       <div>
-
         <Container>
           <Row>
             {!recipes
               ? null
-              : recipes.map((recipe, index) => (
-                  <Col>
-                    <RecipeCards
-                      key={index}
-                      label={recipe.recipe.label}
-                      image={recipe.recipe.image}
-                      type={recipe.recipe.cuisineType}
-                    ></RecipeCards>
-                  </Col>
-                ))}
+              : recipes.map((recipe, index) => {
+                  const id = recipe.recipe.uri.split("_");
+                  return (
+                    <Col>
+                      <RecipeCards
+                        key={index}
+                        id={id[1]}
+                        label={recipe.recipe.label}
+                        image={recipe.recipe.image}
+                        type={recipe.recipe.cuisineType}
+                      ></RecipeCards>
+                    </Col>
+                  );
+                })}
           </Row>
         </Container>
       </div>

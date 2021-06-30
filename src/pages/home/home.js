@@ -1,6 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import {
+  Badge,
+  Button,
+  Form,
+  Card,
+  Container,
+  Row,
+  Col,
+  Jumbotron,
+} from "react-bootstrap";
+import BackgroundImage from "../../components/BackgroundImage/BackgroundImage";
 import RecipeCards from "../../components/recipesCards/recipeCards";
 
 export default function HomeSearch() {
@@ -17,36 +28,56 @@ export default function HomeSearch() {
   }
 
   return (
-    <div>
-      <header>Welcome to the recipe search</header>
-      <h1>
-        Type your ingredients with a space in between and get your favorite
-        recipe:
+    <div
+      style={{
+        backgroundImage: `url("https://www.mandarinstone.com/app/uploads/2018/03/Fusion-Light-Grey-Matt-Porcelain-1a-1400x1400.jpg")`,
+      }}
+    >
+      <h1 class="text-center  font-weight-bolder ">
+        Welcome to <Badge variant="secondary">Recipe Search</Badge>
       </h1>
-      <input
-        type="text"
-        onChange={(event) => {
-          setIngredients(event.target.value);
-        }}
-        value={ingredients}
-        placeholder="EX: chicken tomatoes mushrooms"
-      ></input>
-      <button onClick={search}>Search</button>
+
+      <Jumbotron>
+        <Form>
+          <Form.Group controlId="formSearchBar">
+            <Form.Label>Search</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(event) => {
+                setIngredients(event.target.value);
+              }}
+              value={ingredients}
+              placeholder="EX: chicken tomatoes mushrooms"
+            />
+            <Form.Text className="text-muted">
+              Type your ingredients with a space in between and get your
+              favorite recipe
+            </Form.Text>
+            <Button size="lg" variant="primary" onClick={search}>
+              Search
+            </Button>
+          </Form.Group>
+        </Form>
+      </Jumbotron>
+
       <div>
-        {!recipes
-          ? "no data"
-          : recipes.map((recipe, index) => {
-              const id = recipe.recipe.uri.split("_");
-              return (
-                <RecipeCards
-                  key={index}
-                  label={recipe.recipe.label}
-                  image={recipe.recipe.image}
-                  type={recipe.recipe.cuisineType}
-                  id={id[1]}
-                ></RecipeCards>
-              );
-            })}
+
+        <Container>
+          <Row>
+            {!recipes
+              ? null
+              : recipes.map((recipe, index) => (
+                  <Col>
+                    <RecipeCards
+                      key={index}
+                      label={recipe.recipe.label}
+                      image={recipe.recipe.image}
+                      type={recipe.recipe.cuisineType}
+                    ></RecipeCards>
+                  </Col>
+                ))}
+          </Row>
+        </Container>
       </div>
     </div>
   );

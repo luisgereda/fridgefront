@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Switch, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";

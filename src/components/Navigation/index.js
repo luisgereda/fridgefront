@@ -14,9 +14,9 @@ export default function Navigation() {
   const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand as={NavLink} to="/">
-        YOUR PROJECT NAME
+    <Navbar bg="success" expand="lg">
+      <Navbar.Brand className="font-weight-bolder" as={NavLink} to="/">
+        EMPTY FRIDGE
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

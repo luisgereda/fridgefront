@@ -7,11 +7,13 @@ import { selectToken } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { Col } from "react-bootstrap";
+import axios from "axios";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [profileUrl, setProfileUrl] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const history = useHistory();
@@ -24,12 +26,28 @@ export default function SignUp() {
 
   function submitForm(event) {
     event.preventDefault();
-
-    dispatch(signUp(name, email, password));
-
+    dispatch(signUp(name, email, password, profileUrl));
     setEmail("");
     setPassword("");
     setName("");
+  }
+
+  async function newPhoto(event) {
+    const files = event.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "soqj5w68");
+    data.append("cloud_name", "dyzzo8hq1");
+    try {
+      const response2 = await axios.post(
+        "https://api.cloudinary.com/v1_1/dyzzo8hq1/image/upload",
+        data
+      );
+      //console.log(response2.data.url);
+      setProfileUrl(response2.data.url);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
@@ -73,6 +91,10 @@ export default function SignUp() {
             placeholder="Password"
             required
           />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Upload your photo:</Form.Label>
+          <Form.Control type="file" onChange={newPhoto} />
         </Form.Group>
         <Form.Group className="mt-5">
           <Button variant="primary" type="submit" onClick={submitForm}>

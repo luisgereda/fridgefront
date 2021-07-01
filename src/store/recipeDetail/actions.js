@@ -11,9 +11,9 @@ const recipeDetailsFetched = (event) => ({
   payload: event,
 });
 
-export const fetchRecipeById = (id) => {
+export const fetchRecipeById = (recipeId) => {
   return async (dispatch, getState) => {
-    const response = await axios.get(`${recipeApi}/${id}${auth_detail}`);
+    const response = await axios.get(`${recipeApi}/${recipeId}${auth_detail}`);
     console.log("what is response", response.data.recipe);
     dispatch(recipeDetailsFetched(response.data.recipe));
   };

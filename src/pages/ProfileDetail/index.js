@@ -37,8 +37,6 @@ export default function ProfileDetail() {
   }
   console.log("Favourites : ", favRecipes)
 
-//   GET recipe pic(API:"recipe.image") and name(API: "recipe.label") from edamam
-
 
   return (
     <div>{isOwnProfile ? 
@@ -51,7 +49,8 @@ export default function ProfileDetail() {
         {favRecipes.recipes.map(fav => {
         return (
           <div key={fav.id}>
-            <p>recipe pic</p>
+            <p>{fav.recipePic}</p>
+            <p>{fav.recipeName}</p>
             <Link to={`/recipe/${fav.recipeId}`}>Details here</Link>
 
           </div>

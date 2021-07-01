@@ -31,7 +31,7 @@ export default function HomeSearch() {
         backgroundImage: `url("https://www.mandarinstone.com/app/uploads/2018/03/Fusion-Light-Grey-Matt-Porcelain-1a-1400x1400.jpg")`,
       }}
     >
-      <h1 class="text-center  font-weight-bolder ">
+      <h1 className="text-center  font-weight-bolder ">
         Welcome to <Badge variant="secondary">Recipe Search</Badge>
       </h1>
 

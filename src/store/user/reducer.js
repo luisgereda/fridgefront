@@ -11,6 +11,8 @@ const initialState = {
   name: null,
   email: null,
   recipes: [],
+  profileUrl: null,
+
 };
 
 export default (state = initialState, action) => {

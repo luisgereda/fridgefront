@@ -14,6 +14,7 @@ export const LOG_OUT = "LOG_OUT";
 export const RECIPE_FAVOURITE_POSTED = "RECIPE_FAVOURITE_POSTED";
 export const RECIPE_FAVOURITE_DELETED = "RECIPE_FAVOURITE_DELETED";
 
+
 const recipeFavouritePosted = (event) => ({
   type: RECIPE_FAVOURITE_POSTED,
   payload: event,
@@ -38,14 +39,19 @@ const tokenStillValid = (userWithoutToken) => ({
 
 export const logOut = () => ({ type: LOG_OUT });
 
-export const signUp = (name, email, password) => {
+export const signUp = (name, email, password, profileUrl) => {
   return async (dispatch, getState) => {
     dispatch(appLoading());
+
+    console.log(name, email, password, profileUrl);
     try {
       const response = await axios.post(`${apiUrl}/signup`, {
         name,
         email,
         password,
+
+        profileUrl,
+
       });
 
       dispatch(loginSuccess(response.data));

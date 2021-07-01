@@ -46,7 +46,7 @@ function App() {
         <Route path="/profiles" component={Profiles} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
-        <Route path="/recipe/:id" component={RecipeDetail} />
+        <Route path="/recipe/:recipeId" component={RecipeDetail} />
         <Route path="/profile/:id" component={ProfileDetail} />
       </Switch>
     </div>

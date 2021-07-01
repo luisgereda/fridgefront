@@ -1,6 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
-import { selectToken } from "./selectors";
+import { selectFavouritesRecipes, selectToken, selectUser } from "./selectors";
 import {
   appLoading,
   appDoneLoading,
@@ -11,6 +11,19 @@ import {
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
+export const RECIPE_FAVOURITE_POSTED = "RECIPE_FAVOURITE_POSTED";
+export const RECIPE_FAVOURITE_DELETED = "RECIPE_FAVOURITE_DELETED";
+
+
+const recipeFavouritePosted = (event) => ({
+  type: RECIPE_FAVOURITE_POSTED,
+  payload: event,
+});
+
+const recipeFavouriteDeleted = (event) => ({
+  type: RECIPE_FAVOURITE_DELETED,
+  payload: event,
+});
 
 const loginSuccess = (userWithToken) => {
   return {
@@ -36,7 +49,9 @@ export const signUp = (name, email, password, profileUrl) => {
         name,
         email,
         password,
+
         profileUrl,
+
       });
 
       dispatch(loginSuccess(response.data));
@@ -112,3 +127,50 @@ export const getUserWithStoredToken = () => {
     }
   };
 };
+
+// export const addRecipeFavourite = (recipeId) => {
+//   return async (dispatch, getState) => {
+//     const { id } = selectUser(getState());
+//     const userId = id;
+
+//     const response = await axios.post(`${apiUrl}/addrecipe`, {
+//       recipeId,
+//       userId,
+//     });
+//     console.log("what is response", response);
+//     dispatch(recipeFavouritePosted(response));
+//   };
+// };
+
+export const checkFavorite = (recipeId, recipePic, recipeName) => {
+  return async (dispatch, getState) => {
+    const favourite = selectFavouritesRecipes(getState());
+    console.log("what is favourite", favourite);
+    const { id } = selectUser(getState());
+    const userId = id;
+
+    if (favourite.map((recipe) => recipe.recipeId).includes(recipeId)) {
+      //if the recipe is already in favourites lets remove
+      const response = await axios.delete(`${apiUrl}/deleterecipe/${recipeId}`);
+      console.log("what is deleterecipe response", response);
+
+      dispatch(recipeFavouriteDeleted());
+    } else {
+      //else lets add it to favourites list
+      const response = await axios.post(`${apiUrl}/addrecipe`, {
+        recipeId,
+        recipePic,
+        recipeName,
+        userId,
+      });
+      console.log("what is addrecipe response", response.data.addRecipe);
+
+      dispatch(recipeFavouritePosted(response.data.addRecipe));
+    }
+  };
+};
+
+// export const toggleFavorite = (recipeId) => ({
+//   type: "user/toggleFavorite",
+//   payload: recipeId,
+// });

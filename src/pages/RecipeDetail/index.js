@@ -14,22 +14,66 @@ import {
 //Actions and Selectors
 import { fetchRecipeById } from "../../store/recipeDetail/actions";
 import { selectRecipebyId } from "../../store/recipeDetail/selectors";
+import { addRecipeFavourite, checkFavorite } from "../../store/user/actions";
+import {
+  selectFavouritesRecipes,
+  selectToken,
+} from "../../store/user/selectors";
 
 export default function RecipeDetail() {
   const dispatch = useDispatch();
-  const { id } = useParams();
-  // console.log("what is id", id);
+
+  const token = useSelector(selectToken);
+  console.log("what is token", token);
+
+  const { recipeId } = useParams();
+  console.log("what is recipeId", recipeId, typeof recipeId);
+
   const recipe = useSelector(selectRecipebyId);
   // console.log("what is data", recipe);
 
+  const favouritesRecipes = useSelector(selectFavouritesRecipes);
+  console.log("what is favouritesRecipes", favouritesRecipes);
+
   useEffect(() => {
     // console.log("I got a dispatch");
-    dispatch(fetchRecipeById(id));
-  }, [dispatch, id]);
+    dispatch(fetchRecipeById(recipeId));
+  }, [dispatch, recipeId]);
 
   if (!recipe.uri) {
     return "Loading...";
   }
+  const recipePic = recipe.image;
+  console.log("what is recipePic", recipePic);
+
+  const recipeName = recipe.label;
+  console.log("what is recipeName", recipeName);
+
+  // get recipeId values of the favourite object into an array.
+  const arrFavourites = favouritesRecipes.map((recipe) => recipe.recipeId);
+  console.log("what arrFavourites?", arrFavourites);
+
+  // const allFavouritesArr = favouritesRecipes.map((recipe) => recipe);
+  // console.log("what allFavouritesArr?", allFavouritesArr);
+
+  // check if the actual recipe is included in the array
+  const myisFavourite = arrFavourites.includes(recipeId);
+  console.log("what myisFavourite?", myisFavourite); //true or false
+
+  const isFavourite = favouritesRecipes
+    .map((recipe) => recipe.recipeId)
+    .includes(recipeId);
+  console.log("what isFavourite?", isFavourite);
+
+  // const isFavourite = favouritesRecipes.map((recipe) => {
+  //   return recipe.recipeId.includes(recipeId);
+  // });
+  // console.log("what isFavourite?", isFavourite); //[true, false, false]
+
+  // const isFavourite = favouritesRecipes.filter(
+  //   (recipe) => recipe.recipeId === recipeId
+  // );
+  // console.log("what isFavourite?", isFavourite); //[{...}]
 
   return (
     <div
@@ -48,6 +92,30 @@ export default function RecipeDetail() {
               {recipe.label}
             </Alert>
           </Row>
+          {/* {favouritesRecipes.map((recipe, index) => {
+            return (
+              <div key={index}>
+                <Button>{id.includes(recipe.recipeId) ? "♥" : "♡"}</Button>
+              </div>
+            );
+          })} */}
+          {token ? (
+            <Button
+              onClick={() =>
+                dispatch(checkFavorite(recipeId, recipePic, recipeName))
+              }
+            >
+              {favouritesRecipes
+                .map((recipe) => recipe.recipeId)
+                .includes(recipeId)
+                ? "♥"
+                : "♡"}
+            </Button>
+          ) : null}
+          {/* <Button onClick={() => dispatch(addRecipeFavourite(recipeId))}>
+            add
+          </Button> */}
+
           <hr />
           <ListGroup as="ul" variant="flush">
             <ListGroup.Item className="font-weight-bolder text-uppercase">

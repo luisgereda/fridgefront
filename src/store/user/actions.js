@@ -151,7 +151,15 @@ export const checkFavorite = (recipeId, recipePic, recipeName) => {
 
     if (favourite.map((recipe) => recipe.recipeId).includes(recipeId)) {
       //if the recipe is already in favourites lets remove
-      const response = await axios.delete(`${apiUrl}/deleterecipe/${recipeId}`);
+      const token = selectToken(getState())
+      const response = await axios.delete(`${apiUrl}/deleterecipe/${recipeId}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`
+        },
+      },
+      );
+      
       console.log("what is deleterecipe response", response);
 
       dispatch(recipeFavouriteDeleted());

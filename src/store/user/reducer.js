@@ -1,4 +1,10 @@
-import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID } from "./actions";
+import {
+  LOG_OUT,
+  LOGIN_SUCCESS,
+  TOKEN_STILL_VALID,
+  RECIPE_FAVOURITE_POSTED,
+  RECIPE_FAVOURITE_DELETED,
+} from "./actions";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -12,6 +18,17 @@ export default (state = initialState, action) => {
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return { ...state, ...action.payload };
+
+    case RECIPE_FAVOURITE_POSTED:
+      console.log("action.payload", action.payload);
+      return {
+        ...state,
+        ...state.recipe,
+        recipes: [state.recipe, action.payload],
+      };
+
+    case RECIPE_FAVOURITE_DELETED:
+      return state;
 
     case LOG_OUT:
       localStorage.removeItem("token");

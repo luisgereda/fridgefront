@@ -14,7 +14,7 @@ import {
 //Actions and Selectors
 import { fetchRecipeById } from "../../store/recipeDetail/actions";
 import { selectRecipebyId } from "../../store/recipeDetail/selectors";
-import { addRecipeFavourite } from "../../store/user/actions";
+import { addRecipeFavourite, checkFavorite } from "../../store/user/actions";
 import {
   selectFavouritesRecipes,
   selectToken,
@@ -43,14 +43,22 @@ export default function RecipeDetail() {
   if (!recipe.uri) {
     return "Loading...";
   }
+  const recipePic = recipe.image;
+  console.log("what is recipePic", recipePic);
+
+  const recipeName = recipe.label;
+  console.log("what is recipeName", recipeName);
 
   // get recipeId values of the favourite object into an array.
-  // const arrFavourites = favouritesRecipes.map((recipe) => recipe.recipeId);
-  // console.log("what arrFavourites?", arrFavourites);
+  const arrFavourites = favouritesRecipes.map((recipe) => recipe.recipeId);
+  console.log("what arrFavourites?", arrFavourites);
 
-  //check if the actual recipe is included in the array
-  // const isFavourite = arrFavourites.includes(recipeId);
-  // console.log("what isFavourite?", isFavourite); //true or false
+  // const allFavouritesArr = favouritesRecipes.map((recipe) => recipe);
+  // console.log("what allFavouritesArr?", allFavouritesArr);
+
+  // check if the actual recipe is included in the array
+  const myisFavourite = arrFavourites.includes(recipeId);
+  console.log("what myisFavourite?", myisFavourite); //true or false
 
   const isFavourite = favouritesRecipes
     .map((recipe) => recipe.recipeId)
@@ -92,7 +100,11 @@ export default function RecipeDetail() {
             );
           })} */}
           {token ? (
-            <Button>
+            <Button
+              onClick={() =>
+                dispatch(checkFavorite(recipeId, recipePic, recipeName))
+              }
+            >
               {favouritesRecipes
                 .map((recipe) => recipe.recipeId)
                 .includes(recipeId)
@@ -100,9 +112,9 @@ export default function RecipeDetail() {
                 : "♡"}
             </Button>
           ) : null}
-          <Button onClick={() => dispatch(addRecipeFavourite(recipeId))}>
+          {/* <Button onClick={() => dispatch(addRecipeFavourite(recipeId))}>
             add
-          </Button>
+          </Button> */}
 
           <hr />
           <ListGroup as="ul" variant="flush">

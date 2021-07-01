@@ -43,13 +43,14 @@ export default function ProfileDetail() {
       "You an edit your favourites => you're on your own profile page" : 
       null}
 
-      <p>Profile: picUrl: {favRecipes.userPic} name: {favRecipes.userName}</p>
+      <p><img src={favRecipes.userPic} alt={favRecipes.userName} width="50" height="50" />
+       {favRecipes.userName}</p>
 
       <p>
         {favRecipes.recipes.map(fav => {
         return (
           <div key={fav.id}>
-            <p>{fav.recipePic}</p>
+            <p> <img src={fav.recipePic} alt={fav.recipeName} width="100" height="100" /></p>
             <p>{fav.recipeName}</p>
             <Link to={`/recipe/${fav.recipeId}`}>Details here</Link>
 

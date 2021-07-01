@@ -16,7 +16,7 @@ import { Jumbotron } from "react-bootstrap";
 import HomeSearch from "./pages/home/home";
 import RecipeDetail from "./pages/RecipeDetail";
 import Profiles from "./pages/Profiles/profiles";
-
+import ProfileDetail from "./pages/ProfileDetail"
 // const Home = () => (
 //   <Jumbotron>
 //     <h1>Home</h1>
@@ -47,6 +47,7 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
         <Route path="/recipe/:id" component={RecipeDetail} />
+        <Route path="/profile/:id" component={ProfileDetail} />
       </Switch>
     </div>
   );

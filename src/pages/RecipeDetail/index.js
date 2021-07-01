@@ -44,10 +44,12 @@ export default function RecipeDetail() {
     return "Loading...";
   }
   const recipePic = recipe.image;
-  console.log("what is recipePic", recipePic);
-
   const recipeName = recipe.label;
   console.log("what is recipeName", recipeName);
+
+  if (!favouritesRecipes) {
+    return "Loading.."
+  }
 
   // get recipeId values of the favourite object into an array.
   const arrFavourites = favouritesRecipes.map((recipe) => recipe.recipeId);
@@ -134,7 +136,7 @@ export default function RecipeDetail() {
           <Alert className="font-weight-bolder text-uppercase" variant="danger">
             Preparation
           </Alert>
-          <a href={recipe.url} target="_blank">
+          <a href={recipe.url} target="_blank" rel="noopener noreferrer">
             <Button className="btn btn-success">Instructions</Button>
           </a>
         </Container>

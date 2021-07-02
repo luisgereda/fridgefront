@@ -5,19 +5,22 @@ import { selectUser } from "../../store/user/selectors";
 import { selectFavouritesById } from "../../store/profileDetail/selectors";
 import { fetchRecipesById } from "../../store/profileDetail/actions";
 import { Link } from "react-router-dom";
+
 import StarRatingComponent from "react-star-rating-component";
 import { rating } from "../../store/user/actions";
 import { selectRecipes } from "../../store/user/selectors";
-// import { fetchRecipeById } from "../../store/recipeDetail/actions"
 
-// import {
-//   Button,
-//   Alert,
-//   Container,
-//   Row,
-//   Image,
-//   ListGroup,
-// } from "react-bootstrap";
+import {
+  Button,
+  Badge,
+  Alert,
+  Container,
+  Row,
+  Image,
+  ListGroup,
+  Card,
+} from "react-bootstrap";
+
 
 export default function ProfileDetail() {
   const dispatch = useDispatch();
@@ -25,7 +28,9 @@ export default function ProfileDetail() {
 
   const userData = useSelector(selectUser);
   const favRecipes = useSelector(selectFavouritesById);
+
   const recipes = useSelector(selectRecipes);
+
 
   useEffect(() => {
     dispatch(fetchRecipesById(id));
@@ -38,12 +43,10 @@ export default function ProfileDetail() {
   }
   console.log("Favourites : ", favRecipes);
 
-  // const starClick = (nextValue, prevValue, name) => (
-  //   setStars(nextValue)
-  //   );
-
   return (
-    <div>
+    <div style={{
+        backgroundImage: `url("https://www.mandarinstone.com/app/uploads/2018/03/Fusion-Light-Grey-Matt-Porcelain-1a-1400x1400.jpg")`,
+      }}>
       {isOwnProfile
         ? "You an edit your favourites => you're on your own profile page"
         : null}
@@ -81,6 +84,7 @@ export default function ProfileDetail() {
               );
             })}
       </p>
+
     </div>
   );
 }

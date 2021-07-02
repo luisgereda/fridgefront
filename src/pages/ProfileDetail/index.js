@@ -5,19 +5,16 @@ import { selectUser } from "../../store/user/selectors";
 import { selectFavouritesById } from "../../store/profileDetail/selectors";
 import { fetchRecipesById } from "../../store/profileDetail/actions";
 import { Link } from "react-router-dom";
-
 import StarRatingComponent from "react-star-rating-component";
 import { rating } from "../../store/user/actions";
 import { selectRecipes } from "../../store/user/selectors";
 
 import {
-  Button,
   Badge,
   Alert,
   Container,
   Row,
   Image,
-  ListGroup,
   Card,
 } from "react-bootstrap";
 

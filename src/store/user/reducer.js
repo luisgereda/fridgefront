@@ -12,7 +12,6 @@ const initialState = {
   email: null,
   recipes: [],
   profileUrl: null,
-
 };
 
 export default (state = initialState, action) => {
@@ -22,16 +21,23 @@ export default (state = initialState, action) => {
       return { ...state, ...action.payload };
 
     case RECIPE_FAVOURITE_POSTED:
-      console.log("action.payload", action.payload);
       return {
         ...state,
-        recipes: [...state.recipes, action.payload]
+        recipes: [...state.recipes, action.payload],
       };
 
     case RECIPE_FAVOURITE_DELETED:
+      console.log("what is payload deleted?", action.payload);
+      const checkRecipeId = action.payload;
+      const newRecipes = state.recipes.filter(
+        (recipe) => recipe.recipeId !== checkRecipeId
+      );
+      console.log("what is newFavourite?", newRecipes);
       return {
         ...state,
-      }
+        ...state.recipes,
+        recipes: newRecipes,
+      };
 
     case LOG_OUT:
       localStorage.removeItem("token");

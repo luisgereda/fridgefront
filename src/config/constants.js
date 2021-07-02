@@ -1,5 +1,6 @@
 export const apiUrl =
   process.env.API_URL || "https://emptyfridge2.herokuapp.com";
+
 export const recipeApi =
   process.env.recipeApi || "https://api.edamam.com/api/recipes/v2";
 export const DEFAULT_MESSAGE_TIMEOUT = 3000;

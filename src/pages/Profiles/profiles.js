@@ -10,6 +10,7 @@ import {
   Image,
   ListGroup,
 } from "react-bootstrap";
+import { apiUrl } from "../../config/constants";
 
 export default function Profiles() {
   const [profiles, setProfiles] = useState([]);
@@ -17,7 +18,7 @@ export default function Profiles() {
   useEffect(() => {
     async function getProfiles() {
       try {
-        const response = await axios.get("http://localhost:4000/profiles");
+        const response = await axios.get(`${apiUrl}/profiles`);
         console.log(response);
         setProfiles(response.data.profiles);
       } catch (e) {

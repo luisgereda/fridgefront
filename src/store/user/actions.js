@@ -37,6 +37,13 @@ const tokenStillValid = (userWithoutToken) => ({
   payload: userWithoutToken,
 });
 
+const newRating = (id, stars) => {
+  return {
+    type: "recipes/newRating",
+    payload: { id, stars },
+  };
+};
+
 export const logOut = () => ({ type: LOG_OUT });
 
 export const signUp = (name, email, password, profileUrl) => {
@@ -128,6 +135,7 @@ export const getUserWithStoredToken = () => {
   };
 };
 
+
 // export const addRecipeFavourite = (recipeId) => {
 //   return async (dispatch, getState) => {
 //     const { id } = selectUser(getState());
@@ -182,3 +190,23 @@ export const checkFavorite = (recipeId, recipePic, recipeName) => {
 //   type: "user/toggleFavorite",
 //   payload: recipeId,
 // });
+
+
+export const rating = (id, stars) => {
+  return async (dispatch, getState) => {
+    const token = selectToken(getState());
+    try {
+      const response = await axios.patch(
+        `${apiUrl}/ratings`,
+        { id, stars },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(response.data.id, response.data.stars);
+      dispatch(newRating(response.data.id, response.data.stars));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};

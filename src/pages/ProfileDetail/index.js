@@ -5,16 +5,14 @@ import { selectUser } from "../../store/user/selectors";
 import { selectFavouritesById } from "../../store/profileDetail/selectors";
 import { fetchRecipesById } from "../../store/profileDetail/actions";
 import { Link } from "react-router-dom";
-// import { fetchRecipeById } from "../../store/recipeDetail/actions"
+// import Joke from "../../components/Joke"
 
 import {
-  Button,
   Badge,
   Alert,
   Container,
   Row,
   Image,
-  ListGroup,
   Card,
 } from "react-bootstrap";
 

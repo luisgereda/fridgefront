@@ -16,6 +16,7 @@ export default function LoggedIn() {
       <Link to={`/profile/${user.id}`}>
         <Image src={user.profileUrl} rounded alt="profile pic" width="5%" />
       </Link>
+
       <Button onClick={() => dispatch(logOut())}>Logout</Button>
     </>
   );

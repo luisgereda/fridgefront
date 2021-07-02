@@ -1,37 +1,38 @@
-import axios from "axios"
-import React from 'react'
-import { useEffect, useState } from "react"
+import axios from "axios";
+import React from "react";
+import { useEffect, useState } from "react";
+import { Alert, Container } from "react-bootstrap";
 
 export default function Joke() {
-    const [joke, setJoke] = useState("");
+  const [joke, setJoke] = useState("");
 
-    useEffect(() => {
-      async function getJoke() {
-        try {
-            const response = await axios.get("https://api.spoonacular.com/food/jokes/random/?apiKey=27791deb4caa453b8138f9aea2b8dc0b")
-            const joke = response.data.text
+  useEffect(() => {
+    async function getJoke() {
+      try {
+        const response = await axios.get(
+          "https://api.spoonacular.com/food/jokes/random/?apiKey=27791deb4caa453b8138f9aea2b8dc0b"
+        );
+        const joke = response.data.text;
 
-            console.log("Joke:", joke)
+        console.log("Joke:", joke);
 
-          setJoke(joke);
-        } catch (error) {
-          console.log(error.message);
-        }
+        setJoke(joke);
+      } catch (error) {
+        console.log(error.message);
       }
-      getJoke();
-    }, []);
-
-    if (!joke) {
-        return "Loading.."
     }
-  
+    getJoke();
+  }, []);
 
-    return (
-        <div>
-            <p>
-               {joke}
-            </p>
-        </div>
-    )
+  if (!joke) {
+    return "Loading..";
+  }
+
+  return (
+    <div>
+      <Container>
+        <Alert variant="success">{joke}</Alert>
+      </Container>
+    </div>
+  );
 }
-

@@ -16,6 +16,7 @@ import HomeSearch from "./pages/home/home";
 import RecipeDetail from "./pages/RecipeDetail";
 import Profiles from "./pages/Profiles/profiles";
 import ProfileDetail from "./pages/ProfileDetail"
+import Joke from "./components/Joke"
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
     <div className="App">
       <Navigation />
       <MessageBox />
+      <Joke />
       {isLoading ? <Loading /> : null}
       <Switch>
         <Route exact path="/" component={HomeSearch} />

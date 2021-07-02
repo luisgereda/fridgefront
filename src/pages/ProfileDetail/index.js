@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectUser } from "../../store/user/selectors";
 import { selectFavouritesById } from "../../store/profileDetail/selectors";
 import { fetchRecipesById } from "../../store/profileDetail/actions";
 import { Link } from "react-router-dom";
-// import Joke from "../../components/Joke"
+import StarRatingComponent from "react-star-rating-component";
+import { rating } from "../../store/user/actions";
+import { selectRecipes } from "../../store/user/selectors";
 
 import {
   Badge,
@@ -16,12 +18,16 @@ import {
   Card,
 } from "react-bootstrap";
 
+
 export default function ProfileDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const userData = useSelector(selectUser);
   const favRecipes = useSelector(selectFavouritesById);
+
+  const recipes = useSelector(selectRecipes);
+
 
   useEffect(() => {
     dispatch(fetchRecipesById(id));
@@ -35,44 +41,47 @@ export default function ProfileDetail() {
   console.log("Favourites : ", favRecipes);
 
   return (
-    <div
-      style={{
+    <div style={{
         backgroundImage: `url("https://www.mandarinstone.com/app/uploads/2018/03/Fusion-Light-Grey-Matt-Porcelain-1a-1400x1400.jpg")`,
-      }}
-    >
-      <Container>
+      }}>
+      {isOwnProfile
+        ? "You an edit your favourites => you're on your own profile page"
+        : null}
+
+      <p>
+        Profile: picUrl: {favRecipes.userPic} name: {favRecipes.userName}
+      </p>
+
+      <p>
         {isOwnProfile
-          ? "You an edit your favourites => you're on your own profile page"
-          : null}
+          ? recipes.map((recipes) => {
+              return (
+                <div key={recipes.id}>
+                  <img src={recipes.recipePic} alt={recipes.recipeName}></img>
+                  <p>{recipes.recipeName}</p>
+                  <Link to={`/recipe/${recipes.recipeId}`}>Details here</Link>
+                  <StarRatingComponent
+                    name={"Stars"}
+                    value={recipes.stars}
+                    onStarClick={(nextValue, prevValue, name) =>
+                      dispatch(rating(recipes.id, nextValue))
+                    }
+                  />
+                </div>
+              );
+            })
+          : favRecipes.recipes.map((fav) => {
+              return (
+                <div key={fav.id}>
+                  <img src={fav.recipePic} alt={fav.recipeName}></img>
+                  <p>{fav.recipeName}</p>
+                  <Link to={`/recipe/${fav.recipeId}`}>Details here</Link>
+                  <StarRatingComponent name={"Stars"} value={fav.stars} />{" "}
+                </div>
+              );
+            })}
+      </p>
 
-        <Alert variant="info">
-          <Image
-            src={favRecipes.userPic}
-            alt={favRecipes.userName}
-            width="100"
-            height="100"
-          />
-          <Badge>{favRecipes.userName}</Badge>
-        </Alert>
-
-        <p>
-          <Container>
-            <Row>
-              {favRecipes.recipes.map((fav) => {
-                return (
-                  <Card key={fav.id} style={{ width: "18rem" }}>
-                    <Card.Img src={fav.recipePic} alt={fav.recipeName} />
-                    <Card.Body>
-                      <Card.Title>{fav.recipeName}</Card.Title>
-                      <Link to={`/recipe/${fav.recipeId}`}>Details here</Link>
-                    </Card.Body>
-                  </Card>
-                );
-              })}{" "}
-            </Row>
-          </Container>
-        </p>
-      </Container>
     </div>
   );
 }

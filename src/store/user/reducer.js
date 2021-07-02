@@ -13,6 +13,7 @@ const initialState = {
   recipes: [],
   profileUrl: null,
 
+
 };
 
 export default (state = initialState, action) => {
@@ -39,6 +40,17 @@ export default (state = initialState, action) => {
 
     case TOKEN_STILL_VALID:
       return { ...state, ...action.payload };
+
+    case "recipes/newRating":
+      const updatedRecipes = state.recipes.map((recipe) => {
+        if (recipe.id === action.payload.id) {
+          return { ...recipe, stars: action.payload.stars };
+        } else {
+          return recipe;
+        }
+      });
+
+      return { ...state, recipes: updatedRecipes };
 
     default:
       return state;

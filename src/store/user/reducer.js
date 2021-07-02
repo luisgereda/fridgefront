@@ -11,6 +11,8 @@ const initialState = {
   name: null,
   email: null,
   recipes: [],
+  profileUrl: null,
+
 };
 
 export default (state = initialState, action) => {
@@ -23,11 +25,13 @@ export default (state = initialState, action) => {
       console.log("action.payload", action.payload);
       return {
         ...state,
-        recipes: [...state.recipes, action.payload],
+        recipes: [...state.recipes, action.payload]
       };
 
     case RECIPE_FAVOURITE_DELETED:
-      return state;
+      return {
+        ...state,
+      }
 
     case LOG_OUT:
       localStorage.removeItem("token");

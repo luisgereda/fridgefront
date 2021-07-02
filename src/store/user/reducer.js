@@ -23,8 +23,7 @@ export default (state = initialState, action) => {
       console.log("action.payload", action.payload);
       return {
         ...state,
-        ...state.recipe,
-        recipes: [state.recipe, action.payload],
+        recipes: [...state.recipes, action.payload],
       };
 
     case RECIPE_FAVOURITE_DELETED:
